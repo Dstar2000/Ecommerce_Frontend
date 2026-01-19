@@ -1,10 +1,23 @@
 "use client";
+
 import React from "react";
+import { useRouter } from "next/navigation";
 
 function CustomerHeader() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // 1️⃣ Clear auth/session data
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    // 2️⃣ Redirect to login
+    router.replace("/auth/login");
+  };
+
   return (
-    <header className="h-16 bg-white border-b flex items-center justify-between px-6">
-      {/* Left */}
+    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+      {/* LEFT */}
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
           C
@@ -14,10 +27,14 @@ function CustomerHeader() {
         </h1>
       </div>
 
-      {/* Right */}
+      {/* RIGHT */}
       <div className="flex items-center gap-4">
         <span className="text-sm text-gray-600">Welcome Customer</span>
-        <button className="px-4 py-1.5 rounded-md bg-red-500 text-white text-sm hover:bg-red-600 transition">
+
+        <button
+          onClick={handleLogout}
+          className="px-4 py-1.5 rounded-md bg-red-500 text-white text-sm font-medium hover:bg-red-600 active:scale-95 transition"
+        >
           Logout
         </button>
       </div>
