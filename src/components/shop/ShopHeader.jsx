@@ -6,7 +6,7 @@ import { withClientOnly } from "@/utils/withClientOnly";
 
 const ShopHeaderProfile = withClientOnly(
   () => import("./ShopHeaderProfile"),
-  <span className="text-sm text-gray-400">Loading...</span>,
+  <span className="text-sm text-gray-400">Loading...</span>
 );
 
 function ShopHeader() {
