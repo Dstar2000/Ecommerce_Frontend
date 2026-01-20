@@ -9,12 +9,14 @@ export default function LoginForm() {
   const router = useRouter();
   const { mutate, isLoading, error } = useLogin();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [backendError, setBackendError] = useState("");
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setBackendError("");
 
     mutate(form, {
       onSuccess: (response) => {
@@ -26,7 +28,23 @@ export default function LoginForm() {
           if (data.user?.role === 2) redirectPath = "/admin/dashboard";
 
           router.push(redirectPath);
+        } else {
+          setBackendError(data?.message || "Login failed");
         }
+      },
+      onError: (err) => {
+        let message = "Something went wrong";
+        if (typeof err === "string") {
+          message = err;
+        } else if (err?.response?.data?.message) {
+          message = err.response.data.message;
+        } else if (err?.data?.message) {
+          message = err.data.message;
+        } else if (err?.message) {
+          message = err.message;
+        }
+
+        setBackendError(message);
       },
     });
   };
@@ -57,9 +75,9 @@ export default function LoginForm() {
               Enter your credentials to continue
             </p>
 
-            {error && (
+            {backendError && (
               <div className="mb-6 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
-                {error.message}
+                {backendError}
               </div>
             )}
 

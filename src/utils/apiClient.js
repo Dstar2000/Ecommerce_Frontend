@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const ApiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Uses environment variable
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -11,11 +11,10 @@ const ApiClient = axios.create({
 /* REQUEST INTERCEPTOR */
 ApiClient.interceptors.request.use(
   (config) => {
-    // Only run in browser
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("token")
       if (token) {
-        config.headers.Authorization = `Bearer ${token}` // Add Bearer
+        config.headers.Authorization = `Bearer ${token}`
       }
     }
     return config

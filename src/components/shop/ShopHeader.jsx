@@ -2,16 +2,19 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useUserProfile } from "@/queries/useUser";
 
 function ShopHeader() {
   const router = useRouter();
 
+  // 🔹 CALL PROFILE API
+  const { data, isLoading } = useUserProfile();
+
+  const user = data?.data?.user;
+
   const handleLogout = () => {
-    // 1️⃣ Clear auth/session data
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
-    // 2️⃣ Redirect to login
     router.replace("/auth/login");
   };
 
@@ -20,14 +23,23 @@ function ShopHeader() {
       {/* LEFT */}
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 bg-blue-600 text-white rounded-md flex items-center justify-center font-bold">
-          S
+          {user?.name?.charAt(0)?.toUpperCase() || "S"}
         </div>
         <h1 className="text-lg font-semibold text-gray-800">Shop Dashboard</h1>
       </div>
 
       {/* RIGHT */}
       <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-600">Shop Owner</span>
+        {isLoading ? (
+          <span className="text-sm text-gray-400">Loading...</span>
+        ) : (
+          <div className="text-right">
+            <p className="text-sm font-medium text-gray-700">{user?.name}</p>
+            <p className="text-xs text-gray-500">
+              {user?.role === 1 ? "Shop Owner" : "User"}
+            </p>
+          </div>
+        )}
 
         <button
           onClick={handleLogout}

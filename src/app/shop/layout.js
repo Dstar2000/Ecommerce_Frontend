@@ -1,6 +1,6 @@
 import ShopHeader from "@/components/shop/ShopHeader";
 import ShopSidebar from "@/components/shop/ShopSidebar";
-import "../../globals.css";
+import "../globals.css";
 
 
 export default function ShopLayout({ children }) {

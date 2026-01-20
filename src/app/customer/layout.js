@@ -1,6 +1,6 @@
 import CustomerHeader from "@/components/customer/CustomerHeader";
 import CustomerSidebar from "@/components/customer/CustomerSidebar";
-import "../../globals.css";
+import "../globals.css";
 
 
 export default function CustomerLayout({ children }) {

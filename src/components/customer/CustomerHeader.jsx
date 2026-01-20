@@ -2,16 +2,20 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useUserProfile } from "@/queries/useUser";
 
 function CustomerHeader() {
   const router = useRouter();
 
+  // 🔥 Call profile API
+  const { data, isLoading, isError } = useUserProfile();
+
+  const user = data?.data?.user;
+  console.log(data);
+
   const handleLogout = () => {
-    // 1️⃣ Clear auth/session data
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
-    // 2️⃣ Redirect to login
     router.replace("/auth/login");
   };
 
@@ -29,7 +33,17 @@ function CustomerHeader() {
 
       {/* RIGHT */}
       <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-600">Welcome Customer</span>
+        {isLoading && <span className="text-sm text-gray-400">Loading...</span>}
+
+        {isError && (
+          <span className="text-sm text-red-500">Failed to load profile</span>
+        )}
+
+        {user && (
+          <span className="text-sm text-gray-600">
+            Welcome, <strong>{user.name}</strong>
+          </span>
+        )}
 
         <button
           onClick={handleLogout}
