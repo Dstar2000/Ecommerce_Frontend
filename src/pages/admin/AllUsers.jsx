@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import { withClientOnly } from "@/utils/withClientOnly";
 
 const AllUsersContent = withClientOnly(
-  () => import("@/components/admin/AllUsersContent"),
+  () => import("@/components/Admin/AllUsersContent"),
   <p className="text-gray-500">Loading users...</p>
 );
 
