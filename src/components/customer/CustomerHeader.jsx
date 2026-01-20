@@ -2,16 +2,15 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useUserProfile } from "@/queries/useUser";
+import { withClientOnly } from "@/utils/withClientOnly";
+
+const CustomerHeaderProfile = withClientOnly(
+  () => import("./CustomerHeaderProfile"),
+  <span className="text-sm text-gray-400">Loading...</span>
+);
 
 function CustomerHeader() {
   const router = useRouter();
-
-  // 🔥 Call profile API
-  const { data, isLoading, isError } = useUserProfile();
-
-  const user = data?.data?.user;
-  console.log(data);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -33,17 +32,7 @@ function CustomerHeader() {
 
       {/* RIGHT */}
       <div className="flex items-center gap-4">
-        {isLoading && <span className="text-sm text-gray-400">Loading...</span>}
-
-        {isError && (
-          <span className="text-sm text-red-500">Failed to load profile</span>
-        )}
-
-        {user && (
-          <span className="text-sm text-gray-600">
-            Welcome, <strong>{user.name}</strong>
-          </span>
-        )}
+        <CustomerHeaderProfile />
 
         <button
           onClick={handleLogout}

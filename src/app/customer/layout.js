@@ -1,3 +1,5 @@
+"use client";
+
 import CustomerHeader from "@/components/customer/CustomerHeader";
 import CustomerSidebar from "@/components/customer/CustomerSidebar";
 import "../globals.css";

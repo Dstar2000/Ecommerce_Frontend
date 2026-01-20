@@ -1,3 +1,5 @@
+"use client";
+
 import AdminSidebar from "@/components/Admin/AdminSidebar";
 import AdminHeader from "@/components/Admin/AdminHeader";
 import "../globals.css";

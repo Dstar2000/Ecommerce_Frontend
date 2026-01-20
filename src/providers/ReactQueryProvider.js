@@ -5,7 +5,21 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { useState } from "react"
 
 export default function ReactQueryProvider({ children }) {
-  const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
+    logger: {
+      log: () => {},
+      warn: () => {},
+      error: () => {},
+    },
+  }))
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -14,3 +28,4 @@ export default function ReactQueryProvider({ children }) {
     </QueryClientProvider>
   )
 }
+
