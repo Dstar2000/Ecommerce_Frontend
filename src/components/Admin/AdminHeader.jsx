@@ -6,7 +6,7 @@ import { withClientOnly } from "@/utils/withClientOnly";
 
 const AdminHeaderProfile = withClientOnly(
   () => import("./AdminHeaderProfile"),
-  <span className="text-sm text-gray-500">Loading...</span>
+  <span className="text-sm text-gray-500">Loading...</span>,
 );
 
 function AdminHeader() {
