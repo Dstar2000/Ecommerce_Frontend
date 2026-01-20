@@ -7,7 +7,7 @@ import { withClientOnly } from "@/utils/withClientOnly";
 
 const AllUsersContent = withClientOnly(
   () => import("@/components/admin/AllUsersContent"),
-  <p className="text-gray-500">Loading users...</p>,
+  <p className="text-gray-500">Loading users...</p>
 );
 
 export default function AllUsers() {
